@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using SuiviVaccinCovidCodeFirst.Modeles;
 
 namespace SuiviVaccinCovidCodeFirst
 {
@@ -8,6 +9,8 @@ namespace SuiviVaccinCovidCodeFirst
         static void Main(string[] args)
         {
             VaccinContext context = new VaccinContext();
+
+
             if (context.TypesVaccin.Count() == 0)
             {
                 context.TypesVaccin.Add(new TypeVaccin { Nom = "Pfizer-BioNTech" });

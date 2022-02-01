@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SuiviVaccinCovidCodeFirst
+namespace SuiviVaccinCovidCodeFirst.Modeles
 {
     public class Vaccin
     {
@@ -18,11 +18,4 @@ namespace SuiviVaccinCovidCodeFirst
         }
 
     }
-
-    public class TypeVaccin
-    {
-        public int TypeVaccinId { get; set; }
-        public string Nom { get; set; }
-    }
-
 }
