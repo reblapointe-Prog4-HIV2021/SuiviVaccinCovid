@@ -48,6 +48,14 @@ namespace SuiviVaccinCovidCodeFirst
             context.Vaccins.Add(dose2Mylene);
             context.Vaccins.Add(dose1Gaston);
 
+
+            Covid19 casPositif = new Covid19
+            {
+                Date = new DateTime(2022, 1, 22),
+                NAMPatient = "BHEG12345678",
+                Variant = "omicron"
+            };
+            context.CasCovid19.Add(casPositif);
             context.SaveChanges();
 
             context.Remove(dose1Gaston);
@@ -55,8 +63,8 @@ namespace SuiviVaccinCovidCodeFirst
 
             context.SaveChanges();
 
-            foreach (Vaccin vaccin in context.Vaccins)
-                Console.WriteLine(vaccin);
+            foreach (Immunisation immunisations in context.Immunisations)
+                Console.WriteLine(immunisations);
         }
     }
 }

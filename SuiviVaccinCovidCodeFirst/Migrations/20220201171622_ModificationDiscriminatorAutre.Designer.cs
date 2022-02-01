@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuiviVaccinCovidCodeFirst.Modeles;
 
 namespace SuiviVaccinCovidCodeFirst.Migrations
 {
     [DbContext(typeof(VaccinContext))]
-    partial class VaccinContextModelSnapshot : ModelSnapshot
+    [Migration("20220201171622_ModificationDiscriminatorAutre")]
+    partial class ModificationDiscriminatorAutre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,18 +31,18 @@ namespace SuiviVaccinCovidCodeFirst.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
+                    b.Property<string>("NAMPatient")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NAMPatient")
+                    b.Property<string>("typeImmunisation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ImmunisationID");
 
                     b.ToTable("Immunisations");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Immunisation");
+                    b.HasDiscriminator<string>("typeImmunisation").HasValue("autre");
                 });
 
             modelBuilder.Entity("SuiviVaccinCovidCodeFirst.Modeles.TypeVaccin", b =>
@@ -65,7 +67,7 @@ namespace SuiviVaccinCovidCodeFirst.Migrations
                     b.Property<string>("Variant")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("Covid19");
+                    b.HasDiscriminator().HasValue("covid19");
                 });
 
             modelBuilder.Entity("SuiviVaccinCovidCodeFirst.Modeles.Vaccin", b =>
@@ -77,7 +79,7 @@ namespace SuiviVaccinCovidCodeFirst.Migrations
 
                     b.HasIndex("TypeVaccinId");
 
-                    b.HasDiscriminator().HasValue("Vaccin");
+                    b.HasDiscriminator().HasValue("vaccin");
                 });
 
             modelBuilder.Entity("SuiviVaccinCovidCodeFirst.Modeles.Vaccin", b =>

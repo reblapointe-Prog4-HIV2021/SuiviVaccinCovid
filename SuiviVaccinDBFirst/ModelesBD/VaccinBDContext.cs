@@ -19,8 +19,8 @@ namespace SuiviVaccinDBFirst.ModelesBD
         {
         }
 
+        public virtual DbSet<Immunisations> Immunisations { get; set; }
         public virtual DbSet<TypesVaccin> TypesVaccin { get; set; }
-        public virtual DbSet<Vaccins> Vaccins { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,22 +33,28 @@ namespace SuiviVaccinDBFirst.ModelesBD
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TypesVaccin>(entity =>
+            modelBuilder.Entity<Immunisations>(entity =>
             {
-                entity.HasKey(e => e.TypeVaccinId);
-            });
-
-            modelBuilder.Entity<Vaccins>(entity =>
-            {
-                entity.HasKey(e => e.VaccinId);
+                entity.HasKey(e => e.ImmunisationId);
 
                 entity.HasIndex(e => e.TypeVaccinId);
+
+                entity.Property(e => e.ImmunisationId).HasColumnName("ImmunisationID");
+
+                entity.Property(e => e.Discriminator)
+                    .IsRequired()
+                    .HasDefaultValueSql("(N'')");
 
                 entity.Property(e => e.Nampatient).HasColumnName("NAMPatient");
 
                 entity.HasOne(d => d.TypeVaccin)
-                    .WithMany(p => p.Vaccins)
+                    .WithMany(p => p.Immunisations)
                     .HasForeignKey(d => d.TypeVaccinId);
+            });
+
+            modelBuilder.Entity<TypesVaccin>(entity =>
+            {
+                entity.HasKey(e => e.TypeVaccinId);
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -4,13 +4,13 @@ using System.Text;
 
 namespace SuiviVaccinCovidCodeFirst.Modeles
 {
-    public class Vaccin : Immunisation
+    public class Covid19 : Immunisation
     {
-        public TypeVaccin Type { get; set; }
+        public string Variant { get; set; }
 
         public override string ToString()
         {
-            return $" Vaccin #{ImmunisationID} ({Type?.Nom}), adiminstré le {Date} à {NAMPatient}";
+            return $" Cas positif à la Covid-19 #{ImmunisationID} ({Variant}), le {Date} pour {NAMPatient}";
         }
 
     }

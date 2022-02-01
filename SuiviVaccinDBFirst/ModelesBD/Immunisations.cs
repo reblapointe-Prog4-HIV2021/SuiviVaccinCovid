@@ -7,12 +7,14 @@ using System.Collections.Generic;
 
 namespace SuiviVaccinDBFirst.ModelesBD
 {
-    public partial class Vaccins
+    public partial class Immunisations
     {
-        public int VaccinId { get; set; }
+        public int ImmunisationId { get; set; }
         public DateTime Date { get; set; }
         public string Nampatient { get; set; }
+        public string Variant { get; set; }
         public int? TypeVaccinId { get; set; }
+        public string Discriminator { get; set; }
 
         public virtual TypesVaccin TypeVaccin { get; set; }
     }

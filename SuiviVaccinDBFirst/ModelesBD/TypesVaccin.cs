@@ -11,12 +11,12 @@ namespace SuiviVaccinDBFirst.ModelesBD
     {
         public TypesVaccin()
         {
-            Vaccins = new HashSet<Vaccins>();
+            Immunisations = new HashSet<Immunisations>();
         }
 
         public int TypeVaccinId { get; set; }
         public string Nom { get; set; }
 
-        public virtual ICollection<Vaccins> Vaccins { get; set; }
+        public virtual ICollection<Immunisations> Immunisations { get; set; }
     }
 }
