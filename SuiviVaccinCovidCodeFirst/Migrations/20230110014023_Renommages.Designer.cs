@@ -7,50 +7,55 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuiviVaccinCovidCodeFirst.Modeles;
 
+#nullable disable
+
 namespace SuiviVaccinCovidCodeFirst.Migrations
 {
     [DbContext(typeof(VaccinsContext))]
-    [Migration("20220201171622_ModificationDiscriminatorAutre")]
-    partial class ModificationDiscriminatorAutre
+    [Migration("20230110014023_Renommages")]
+    partial class Renommages
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.22")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.12")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("SuiviVaccinCovidCodeFirst.Modeles.Immunisation", b =>
                 {
                     b.Property<int>("ImmunisationID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImmunisationID"), 1L, 1);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("NAMPatient")
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("typeImmunisation")
-                        .IsRequired()
+                    b.Property<string>("NAMPatient")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ImmunisationID");
 
                     b.ToTable("Immunisations");
 
-                    b.HasDiscriminator<string>("typeImmunisation").HasValue("autre");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Immunisation");
                 });
 
             modelBuilder.Entity("SuiviVaccinCovidCodeFirst.Modeles.TypeVaccin", b =>
                 {
                     b.Property<int>("TypeVaccinId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TypeVaccinId"), 1L, 1);
 
                     b.Property<string>("Nom")
                         .HasColumnType("nvarchar(max)");
@@ -67,7 +72,7 @@ namespace SuiviVaccinCovidCodeFirst.Migrations
                     b.Property<string>("Variant")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("covid19");
+                    b.HasDiscriminator().HasValue("Covid19");
                 });
 
             modelBuilder.Entity("SuiviVaccinCovidCodeFirst.Modeles.Vaccin", b =>
@@ -79,7 +84,7 @@ namespace SuiviVaccinCovidCodeFirst.Migrations
 
                     b.HasIndex("TypeVaccinId");
 
-                    b.HasDiscriminator().HasValue("vaccin");
+                    b.HasDiscriminator().HasValue("Vaccin");
                 });
 
             modelBuilder.Entity("SuiviVaccinCovidCodeFirst.Modeles.Vaccin", b =>
@@ -87,6 +92,8 @@ namespace SuiviVaccinCovidCodeFirst.Migrations
                     b.HasOne("SuiviVaccinCovidCodeFirst.Modeles.TypeVaccin", "Type")
                         .WithMany()
                         .HasForeignKey("TypeVaccinId");
+
+                    b.Navigation("Type");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,50 +6,50 @@ namespace SuiviVaccinCovidCodeFirst
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] _)
         {
-            VaccinContext context = new VaccinContext();
+            VaccinsContext context = new();
 
 
-            if (context.TypesVaccin.Count() == 0)
+            if (!context.Vaccins.Any())
             {
-                context.TypesVaccin.Add(new TypeVaccin { Nom = "Pfizer-BioNTech" });
-                context.TypesVaccin.Add(new TypeVaccin { Nom = "Moderna" });
-                context.TypesVaccin.Add(new TypeVaccin { Nom = "AstraZeneca" });
+                context.Vaccins.Add(new Vaccin { Nom = "Pfizer-BioNTech" });
+                context.Vaccins.Add(new Vaccin { Nom = "Moderna" });
+                context.Vaccins.Add(new Vaccin { Nom = "AstraZeneca" });
                 context.SaveChanges();
             }
 
-            TypeVaccin pfizer = context.TypesVaccin.Where(t => t.Nom == "Pfizer-BioNTech").FirstOrDefault();
-            TypeVaccin moderna = context.TypesVaccin.Where(t => t.Nom == "Moderna").FirstOrDefault();
-            TypeVaccin astrazenica = context.TypesVaccin.Where(t => t.Nom == "AstraZeneca").FirstOrDefault();
+            Vaccin pfizer = context.Vaccins.Where(t => t.Nom == "Pfizer-BioNTech").FirstOrDefault();
+            Vaccin moderna = context.Vaccins.Where(t => t.Nom == "Moderna").FirstOrDefault();
+            Vaccin astrazenica = context.Vaccins.Where(t => t.Nom == "AstraZeneca").FirstOrDefault();
 
-            Vaccin dose1Mylene = new Vaccin
+            Dose dose1Mylene = new()
             {
                 Date = new DateTime(2021, 06, 15),
                 NAMPatient = "LAPM12345678",
-                Type = moderna
+                Vaccin = moderna
             };
 
-            Vaccin dose2Mylene = new Vaccin
+            Dose dose2Mylene = new()
             {
                 Date = DateTime.Today,
                 NAMPatient = "LAPM12345678",
-                Type = moderna
+                Vaccin = moderna
             };
 
-            Vaccin dose1Gaston = new Vaccin
+            Dose dose1Gaston = new()
             {
                 Date = new DateTime(2021, 8, 22),
                 NAMPatient = "BHEG12345678",
-                Type = pfizer
+                Vaccin = pfizer
             };
 
-            context.Vaccins.Add(dose1Mylene);
-            context.Vaccins.Add(dose2Mylene);
-            context.Vaccins.Add(dose1Gaston);
+            context.Doses.Add(dose1Mylene);
+            context.Doses.Add(dose2Mylene);
+            context.Doses.Add(dose1Gaston);
 
 
-            Covid19 casPositif = new Covid19
+            Covid19 casPositif = new()
             {
                 Date = new DateTime(2022, 1, 22),
                 NAMPatient = "BHEG12345678",
@@ -59,7 +59,7 @@ namespace SuiviVaccinCovidCodeFirst
             context.SaveChanges();
 
             context.Remove(dose1Gaston);
-            dose1Mylene.Type = astrazenica;
+            dose1Mylene.Vaccin = astrazenica;
 
             context.SaveChanges();
 

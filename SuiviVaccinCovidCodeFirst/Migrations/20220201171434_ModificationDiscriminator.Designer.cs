@@ -9,7 +9,7 @@ using SuiviVaccinCovidCodeFirst.Modeles;
 
 namespace SuiviVaccinCovidCodeFirst.Migrations
 {
-    [DbContext(typeof(VaccinContext))]
+    [DbContext(typeof(VaccinsContext))]
     [Migration("20220201171434_ModificationDiscriminator")]
     partial class ModificationDiscriminator
     {
